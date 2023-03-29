@@ -19,7 +19,7 @@ bool isValid = RSAIdValidator.IsValidSAID("7201014800087");
 
 
 References
-For more information on what a South African ID number means and what it reveals about you, [see this article] (https://mybroadband.co.za/news/security/303812-what-your-south-african-id-number-means-and-what-it-reveals-about-you.html).
+For more information on what a South African ID number means and what it reveals about you, [see this article](https://mybroadband.co.za/news/security/303812-what-your-south-african-id-number-means-and-what-it-reveals-about-you.html).
 
 License
 RSA ID Numbers is licensed under the MIT License.
