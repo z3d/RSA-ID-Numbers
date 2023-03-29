@@ -6,7 +6,7 @@ RSA ID Numbers is a .NET library for working with South African ID numbers. It c
 
 RSA ID Numbers can be installed via NuGet. Run the following command in the Package Manager Console:
 
-```Install-Package RSA-ID-Numbers```
+```Install-Package RSAIdNumbers```
 
 
 ## Usage
