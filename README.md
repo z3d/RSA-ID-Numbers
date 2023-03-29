@@ -16,7 +16,7 @@ To extract information from a South African ID number, use the `RSAIDNumber` cla
 ```csharp
 using RsaIdNumbers;
 bool isValid = RSAIdValidator.IsValidSAID("7201014800087");
-
+```
 
 References
 For more information on what a South African ID number means and what it reveals about you, [see this article](https://mybroadband.co.za/news/security/303812-what-your-south-african-id-number-means-and-what-it-reveals-about-you.html).
