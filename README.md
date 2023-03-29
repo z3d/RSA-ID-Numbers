@@ -11,7 +11,7 @@ RSA ID Numbers can be installed via NuGet. Run the following command in the Pack
 
 ## Usage
 
-To extract information from a South African ID number, use the `RSAIDNumber` class:
+To extract information from a South African ID number, use the `RSAIdValidator` class:
 
 ```csharp
 using RsaIdNumbers;
