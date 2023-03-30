@@ -36,7 +36,7 @@ jobs:
         run: dotnet pack --configuration Release --output "./packages"
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: myapp
           path: ./packages
