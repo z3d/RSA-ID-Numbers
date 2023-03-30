@@ -32,6 +32,9 @@ jobs:
       - name: Test
         run: dotnet test --configuration Release --logger "trx;LogFileName=test_results.xml"
 
+      - name: Create packages directory
+        run: mkdir -p ./packages
+
       - name: Publish
         run: dotnet pack --configuration Release --output "./packages"
 
