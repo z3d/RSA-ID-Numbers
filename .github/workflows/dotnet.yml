@@ -37,6 +37,9 @@ jobs:
 
       - name: Publish
         run: dotnet pack --configuration Release --output "./packages"
+        
+      - name: Copy Package
+        run: cp /home/runner/work/RSA-ID-Numbers/RSA-ID-Numbers/src/packages/RsaIdNumbers*.nupkg ./packages
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
