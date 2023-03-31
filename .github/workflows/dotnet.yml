@@ -43,3 +43,5 @@ jobs:
         with:
           name: myapp
           path: ./src/packages
+      - name: Publish to NuGet.org
+         run: dotnet nuget push ./packages/*.nupkg --api-key ${{ secrets.NUGET_API_KEY_EXPIRES }} --source https://api.nuget.org/v3/index.json
