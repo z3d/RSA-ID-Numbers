@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Globalization;
+using System.Linq;
 
 namespace RsaIdNumbers
 {
@@ -7,81 +7,64 @@ namespace RsaIdNumbers
     {
         public static bool IsValidSAID(string idNumber)
         {
+            // Check length
             if (idNumber.Length != 13)
-            {
                 return false;
-            }
 
-            // Parse the date of birth from the first 6 digits
-            string dateOfBirthString = idNumber.Substring(0, 6);
-            DateTime dateOfBirth;
-            if (!DateTime.TryParseExact(dateOfBirthString, "yyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateOfBirth))
-            {
+            // Check if all characters are digits
+            if (!idNumber.All(char.IsDigit))
                 return false;
-            }
 
-            // Parse the gender from the next 4 digits
-            string genderString = idNumber.Substring(6, 4);
-            int gender;
-            if (!int.TryParse(genderString, out gender))
-            {
+            // Extract and validate date of birth
+            var yy = int.Parse(idNumber.Substring(0, 2));
+            var mm = int.Parse(idNumber.Substring(2, 2));
+            var dd = int.Parse(idNumber.Substring(4, 2));
+
+            // Handle Y2K issue - assume 00-21 is 2000s, and 22-99 is 1900s
+            int year = yy <= 21 ? 2000 + yy : 1900 + yy;
+
+            if (!IsValidDate(year, mm, dd))
                 return false;
-            }
 
-            // Parse the citizenship status from the next digit
-            string citizenshipString = idNumber.Substring(10, 1);
-            int citizenship;
-            if (!int.TryParse(citizenshipString, out citizenship))
-            {
+            // Citizenship validation
+            char citizenshipDigit = idNumber[10];
+            if (citizenshipDigit != '0' && citizenshipDigit != '1')
                 return false;
-            }
 
-            // Parse the checksum from the last digit
-            string checksumString = idNumber.Substring(12, 1);
-            int checksum;
-            if (!int.TryParse(checksumString, out checksum))
-            {
-                return false;
-            }
-
-            // Check that the gender is valid
-            if (gender < 0 || gender > 9999)
-            {
-                return false;
-            }
-
-            // Check that the citizenship status is valid
-            if (citizenship != 0 && citizenship != 1)
-            {
-                return false;
-            }
-
-            // Calculate the Luhn checksum
-
-            int[] luhnFactors = new int[] { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1 };
-            int[] digits = new int[13];
-            for (int i = 0; i < 12; i++)
-            {
-                if (!int.TryParse(idNumber.Substring(i, 1), out digits[i]))
-                {
-                    return false;
-                }
-            }
-            int luhnSum = 0;
-            for (int i = 0; i < 13; i++)
-            {
-                int luhnProduct = digits[i] * luhnFactors[i];
-                if (luhnProduct > 9)
-                {
-                    luhnProduct -= 9;
-                }
-                luhnSum += luhnProduct;
-            }
-            int calculatedChecksum = (10 - (luhnSum % 10)) % 10;
-
-            // Compare the calculated checksum to the actual checksum
-            return checksum == calculatedChecksum;
+            // Checksum validation
+            return IsValidChecksum(idNumber);
         }
 
+        private static bool IsValidDate(int year, int month, int day)
+        {
+            DateTime date;
+            return DateTime.TryParse($"{year}-{month:00}-{day:00}", out date);
+        }
+
+        private static bool IsValidChecksum(string id)
+        {
+            int sum = 0;
+
+            for (int i = 0; i < 12; i++)
+            {
+                int value = id[i] - '0';
+
+                if ((11 - i) % 2 == 0) // Check if it's an even position from the right (0-based index)
+                {
+                    value *= 2;
+                    if (value > 9)
+                    {
+                        value -= 9;
+                    }
+                }
+
+                sum += value;
+            }
+
+            int checksumDigit = 10 - (sum % 10);
+            if (checksumDigit == 10) checksumDigit = 0;
+
+            return checksumDigit == id[12] - '0';
+        }
     }
 }
