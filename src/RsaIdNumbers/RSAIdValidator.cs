@@ -3,6 +3,7 @@ using System.Linq;
 
 namespace RsaIdNumbers
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "S101:Rename class 'RSAIdValidator' to match pascal case naming rules, consider using 'RsaIdValidator'.")]
     public static class RSAIdValidator
     {
         public static bool IsValidSAID(string idNumber)
@@ -16,9 +17,9 @@ namespace RsaIdNumbers
                 return false;
 
             // Extract and validate date of birth
-            var yy = int.Parse(idNumber.Substring(0, 2));
-            var mm = int.Parse(idNumber.Substring(2, 2));
-            var dd = int.Parse(idNumber.Substring(4, 2));
+            var yy = int.Parse(idNumber.AsSpan(0, 2));
+            var mm = int.Parse(idNumber.AsSpan(2, 2));
+            var dd = int.Parse(idNumber.AsSpan(4, 2));
 
             // Handle Y2K issue - assume 00-21 is 2000s, and 22-99 is 1900s
             int year = yy <= 21 ? 2000 + yy : 1900 + yy;
@@ -37,8 +38,8 @@ namespace RsaIdNumbers
 
         private static bool IsValidDate(int year, int month, int day)
         {
-            DateTime date;
-            return DateTime.TryParse($"{year}-{month:00}-{day:00}", out date);
+            var cultureInfo = System.Globalization.CultureInfo.InvariantCulture;
+            return DateTime.TryParseExact($"{year:0000}-{month:00}-{day:00}", "yyyy-MM-dd", cultureInfo, System.Globalization.DateTimeStyles.None, out _);
         }
 
         private static bool IsValidChecksum(string id)

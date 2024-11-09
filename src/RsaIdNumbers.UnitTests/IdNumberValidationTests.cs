@@ -1,4 +1,4 @@
-﻿namespace RsaIdNumbers.Tests;
+﻿namespace RsaIdNumbers.UnitTests;
 
 public class RSAIdValidatorTests
 {
