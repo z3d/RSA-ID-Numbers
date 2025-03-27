@@ -12,39 +12,43 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-        run:
-          working-directory: ./src
 
     steps:
       - uses: actions/checkout@v3
-      
-      - name: Setup .NET Core SDK
+
+      - name: Clear DOTNET_ROOT if set
+        run: unset DOTNET_ROOT
+
+      - name: Setup .NET SDK
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: |
+            8.0.x
+
+      - name: Check .NET SDK version
+        run: dotnet --info
 
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore ./src/RsaIdNumbers.sln
 
       - name: Build
-        run: dotnet build --configuration Release
+        run: dotnet build ./src/RsaIdNumbers.sln --configuration Release
 
       - name: Test
-        run: dotnet test --configuration Release --logger "trx;LogFileName=test_results.xml"
+        run: dotnet test ./src/RsaIdNumbers.sln --configuration Release --logger "trx;LogFileName=test_results.xml"
 
       - name: Create packages directory
-        run: mkdir -p ./packages
+        run: mkdir -p ./src/packages
 
       - name: Publish
-        run: dotnet pack --configuration Release --output "./packages"
+        run: dotnet pack ./src/RsaIdNumbers.sln --configuration Release --output "./src/packages"
         
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: myapp
           path: ./src/packages
           
       - name: Publish to NuGet.org
         if: github.ref == 'refs/heads/main'
-        run: dotnet nuget push ./packages/*.nupkg --api-key ${{ secrets.NUGET_API_KEY_EXPIRES }} --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push ./src/packages/*.nupkg --api-key ${{ secrets.NUGET_API_KEY_EXPIRES }} --source https://api.nuget.org/v3/index.json
