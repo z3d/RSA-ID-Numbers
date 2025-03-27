@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <Authors>z3d</Authors>
-    <Version>1.1.2</Version>
+    <Version>1.3.0</Version>
     <Description>A library for validating South African ID numbers.</Description>
     <PackageProjectUrl>https://github.com/z3d/RSA-ID-Numbers</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
