@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 
 namespace RsaIdNumbers
@@ -21,8 +21,8 @@ namespace RsaIdNumbers
             var mm = int.Parse(idNumber.AsSpan(2, 2));
             var dd = int.Parse(idNumber.AsSpan(4, 2));
 
-            // Handle Y2K issue - assume 00-21 is 2000s, and 22-99 is 1900s
-            int year = yy <= 21 ? 2000 + yy : 1900 + yy;
+            // Handle Y2K issue - assume 00-30 is 2000s, and 22-99 is 1900s
+            int year = yy <= 25 ? 2000 + yy : 1900 + yy;
 
             if (!IsValidDate(year, mm, dd))
                 return false;
