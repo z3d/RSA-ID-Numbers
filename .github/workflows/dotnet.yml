@@ -51,4 +51,4 @@ jobs:
           
       - name: Publish to NuGet.org
         if: github.ref == 'refs/heads/main'
-        run: dotnet nuget push ./src/packages/*.nupkg --api-key ${{ secrets.NUGET_API_KEY_EXPIRES }} --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push ./src/packages/*.nupkg --api-key ${{ secrets.NUGET_API_KEY_EXPIRES }} --source https://api.nuget.org/v3/index.json --skip-duplicate
