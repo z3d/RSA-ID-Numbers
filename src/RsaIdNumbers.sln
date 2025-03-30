@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RsaIdNumbers", "RsaIdNumber
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RsaIdNumbers.UnitTests", "RsaIdNumbers.UnitTests\RsaIdNumbers.UnitTests.csproj", "{6B842B50-F3A6-4FC2-8C1C-8354105B59A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RsaIdNumbers.ConsoleApp", "RsaIdNumbers.ConsoleApp\RsaIdNumbers.ConsoleApp.csproj", "{C3929F90-076A-4755-88E9-B19FA4108C36}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6B842B50-F3A6-4FC2-8C1C-8354105B59A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B842B50-F3A6-4FC2-8C1C-8354105B59A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B842B50-F3A6-4FC2-8C1C-8354105B59A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3929F90-076A-4755-88E9-B19FA4108C36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3929F90-076A-4755-88E9-B19FA4108C36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3929F90-076A-4755-88E9-B19FA4108C36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3929F90-076A-4755-88E9-B19FA4108C36}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
