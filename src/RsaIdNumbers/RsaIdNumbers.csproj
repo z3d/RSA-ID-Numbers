@@ -5,7 +5,7 @@
     <LangVersion>12.0</LangVersion>
     <Nullable>enable</Nullable>
     <Authors>z3d</Authors>
-    <Version>1.4.0</Version>
+    <Version>1.5.0</Version>
     <Description>A library for validating South African ID numbers.</Description>
     <PackageProjectUrl>https://github.com/z3d/RSA-ID-Numbers</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
