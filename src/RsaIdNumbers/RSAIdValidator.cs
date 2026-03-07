@@ -6,7 +6,7 @@ namespace RsaIdNumbers
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "S101:Rename class 'RSAIdValidator' to match pascal case naming rules, consider using 'RsaIdValidator'.")]
     public static class RSAIdValidator
     {
-        public static bool IsValidSAID(string idNumber)
+        public static bool IsValidSAID(string idNumber, int centuryCutoff = 25)
         {
             // Check length
             if (idNumber.Length != 13)
@@ -21,8 +21,8 @@ namespace RsaIdNumbers
             var mm = int.Parse(idNumber.Substring(2, 2));
             var dd = int.Parse(idNumber.Substring(4, 2));
 
-            // Handle Y2K issue - assume 00-30 is 2000s, and 22-99 is 1900s
-            int year = yy <= 25 ? 2000 + yy : 1900 + yy;
+            // Handle Y2K: two-digit years up to centuryCutoff are 2000s, the rest are 1900s
+            int year = yy <= centuryCutoff ? 2000 + yy : 1900 + yy;
 
             if (!IsValidDate(year, mm, dd))
                 return false;

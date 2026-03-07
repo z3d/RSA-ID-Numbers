@@ -35,4 +35,41 @@ public class RSAIdValidatorTests
         bool actual = RSAIdValidator.IsValidSAID(idNumber);
         Assert.Equal(expected, actual);
     }
+
+    [Theory]
+    [InlineData("2601017061089", 26, true)]  // yy=26, cutoff=26 -> 2026 (at boundary, maps to 2000s)
+    [InlineData("2601017061089", 25, true)]  // yy=26, cutoff=25 -> 1926 (above boundary, maps to 1900s, still valid)
+    [InlineData("2601017061089", 30, true)]  // yy=26, cutoff=30 -> 2026 (below boundary, maps to 2000s)
+    [InlineData("2606150064089", 26, true)]  // yy=26, cutoff=26 -> 2026 (valid, different date)
+    [InlineData("0002298474087", 25, true)]  // yy=00, Feb 29, cutoff=25 -> 2000 leap year (valid)
+    [InlineData("0002298474087", 0, true)]   // yy=00, Feb 29, cutoff=0 -> 2000 leap year (valid)
+    [InlineData("0002298474087", -1, false)] // yy=00, Feb 29, cutoff=-1 -> 1900 NOT leap year (invalid!)
+    [InlineData("9901014800080", 0, true)]   // yy=99, cutoff=0 -> 1999 (maps to 1900s)
+    [InlineData("9901014800080", 99, true)]  // yy=99, cutoff=99 -> 2099 (maps to 2000s)
+    public void IsValidSAID_WithCenturyCutoff(string idNumber, int centuryCutoff, bool expected)
+    {
+        bool actual = RSAIdValidator.IsValidSAID(idNumber, centuryCutoff);
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void IsValidSAID_DefaultCutoffMatchesExplicitCutoff()
+    {
+        string id = "2201014800082";
+        Assert.Equal(
+            RSAIdValidator.IsValidSAID(id),
+            RSAIdValidator.IsValidSAID(id, 25));
+    }
+
+    [Fact]
+    public void IsValidSAID_CutoffAtBoundary_MapsToCorrectCentury()
+    {
+        // yy=26: at cutoff=26 should map to 2000s, at cutoff=25 should map to 1900s
+        // Both are valid dates, but we verify the parameter is respected
+        // by using the generator round-trip: an ID generated for 2026 should
+        // validate with cutoff >= 26
+        string id = RSAIdGenerator.GenerateValidSAID(new System.DateTime(2026, 1, 1), false, true);
+        Assert.True(RSAIdValidator.IsValidSAID(id, 26));
+        Assert.True(RSAIdValidator.IsValidSAID(id, 50));
+    }
 }

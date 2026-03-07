@@ -18,6 +18,10 @@ To validate a South African ID number, use the `RSAIdValidator` class:
 using RsaIdNumbers;
 
 bool isValid = RSAIdValidator.IsValidSAID("7201014800087");
+
+// Optionally specify the Y2K century cutoff (default: 25).
+// Two-digit years <= cutoff are treated as 2000s, otherwise 1900s.
+bool isValid2 = RSAIdValidator.IsValidSAID("2601014800088", centuryCutoff: 30);
 ```
 
 ### Generating a Valid ID Number
