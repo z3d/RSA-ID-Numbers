@@ -17,9 +17,9 @@ namespace RsaIdNumbers
                 return false;
 
             // Extract and validate date of birth
-            var yy = int.Parse(idNumber.AsSpan(0, 2));
-            var mm = int.Parse(idNumber.AsSpan(2, 2));
-            var dd = int.Parse(idNumber.AsSpan(4, 2));
+            var yy = int.Parse(idNumber.Substring(0, 2));
+            var mm = int.Parse(idNumber.Substring(2, 2));
+            var dd = int.Parse(idNumber.Substring(4, 2));
 
             // Handle Y2K issue - assume 00-30 is 2000s, and 22-99 is 1900s
             int year = yy <= 25 ? 2000 + yy : 1900 + yy;
