@@ -42,6 +42,8 @@ public class RSAIdValidatorTests
     [InlineData("2601017061089", 30, true)]  // yy=26, cutoff=30 -> 2026 (below boundary, maps to 2000s)
     [InlineData("2606150064089", 26, true)]  // yy=26, cutoff=26 -> 2026 (valid, different date)
     [InlineData("0002298474087", 25, true)]  // yy=00, Feb 29, cutoff=25 -> 2000 leap year (valid)
+    [InlineData("0002298474087", 0, true)]   // yy=00, Feb 29, cutoff=0 -> 2000 leap year (valid)
+    [InlineData("0002298474087", -1, false)] // yy=00, Feb 29, cutoff=-1 -> 1900 NOT leap year (invalid!)
     [InlineData("9901014800080", 0, true)]   // yy=99, cutoff=0 -> 1999 (maps to 1900s)
     [InlineData("9901014800080", 99, true)]  // yy=99, cutoff=99 -> 2099 (maps to 2000s)
     public void IsValidSAID_WithCenturyCutoff(string idNumber, int centuryCutoff, bool expected)
